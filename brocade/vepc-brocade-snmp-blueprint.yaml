@@ -121,7 +121,7 @@ dsl_definitions:
 
 node_types:
 
-  VYATA_OS:
+  VYATTA_OS:
     derived_from: cloudify.nodes.Root
     properties:
       city:
@@ -154,7 +154,7 @@ node_types:
       myType:
         default: "DUMMY FORTIGATE VNF"
 
-  VYATA_ROUTER:
+  VYATTA_ROUTER:
     derived_from: VNF
     properties:
       myType:
@@ -346,7 +346,7 @@ node_templates:
       #- type: cloudify.openstack.server_connected_to_keypair
       #  target: key_pair
       - type: cloudify.relationships.contained_in
-        target: EMPIRE_STATE_VYATA_OS
+        target: EMPIRE_STATE_VYATTA_OS
       - type: cloudify.openstack.server_connected_to_port
         target: port_public
       - type: cloudify.openstack.server_connected_to_port
@@ -538,29 +538,29 @@ node_templates:
     - type: cloudify.openstack.port_connected_to_security_group
       target: additional_security_group
 
-  EMPIRE_STATE_VYATA_OS:
-    type: VYATA_OS
+  EMPIRE_STATE_VYATTA_OS:
+    type: VYATTA_OS
     properties:
       city: New York City
     instances:
       deploy: 1
 
 
-  VYATA_1_VM:
+  VYATTA_1_VM:
     type: VNF_VM
     instances:
       deploy: 1
     relationships:
       - type: cloudify.relationships.contained_in
-        target: EMPIRE_STATE_VYATA_OS
+        target: EMPIRE_STATE_VYATTA_OS
 
-  VYATA_1:
-    type: VYATA_ROUTER
+  VYATTA_1:
+    type: VYATTA_ROUTER
     instances:
       deploy: 1
     relationships:
       - type: cloudify.relationships.contained_in
-        target: VYATA_1_VM
+        target: VYATTA_1_VM
       - type: cloudify.relationships.connected_to
         target: fortigate_1_snmp
 
@@ -570,7 +570,7 @@ node_templates:
       deploy: 1
     relationships:
       - type: cloudify.relationships.contained_in
-        target: GHERKIN_VYATA_OS
+        target: GHERKIN_VYATTA_OS
 
   FORTIGATE_2:
     type: DUMMY_FORTIGATE
@@ -580,8 +580,8 @@ node_templates:
       - type: cloudify.relationships.contained_in
         target: FORTIGATE_2_VM
 
-  GHERKIN_VYATA_OS:
-    type: VYATA_OS
+  GHERKIN_VYATTA_OS:
+    type: VYATTA_OS
     properties:
       city: London
     instances:
@@ -594,7 +594,7 @@ node_templates:
       deploy: 1
     relationships:
       - type: cloudify.relationships.contained_in
-        target: GHERKIN_VYATA_OS
+        target: GHERKIN_VYATTA_OS
 
   FORTIGATE_3:
     type: DUMMY_FORTIGATE
@@ -604,21 +604,21 @@ node_templates:
       - type: cloudify.relationships.contained_in
         target: FORTIGATE_3_VM
 
-  VYATA_3_VM:
+  VYATTA_3_VM:
     type: VNF_VM
     instances:
       deploy: 1
     relationships:
       - type: cloudify.relationships.contained_in
-        target: GHERKIN_VYATA_OS
+        target: GHERKIN_VYATTA_OS
 
-  VYATA_3:
-    type: VYATA_ROUTER
+  VYATTA_3:
+    type: VYATTA_ROUTER
     instances:
       deploy: 1
     relationships:
       - type: cloudify.relationships.contained_in
-        target: VYATA_3_VM
+        target: VYATTA_3_VM
       - type: cloudify.relationships.connected_to
         target: FORTIGATE_3
 
@@ -626,10 +626,10 @@ node_templates:
 groups:
 
   EMPIRE_STATE_BRANCH:
-    members: [EMPIRE_STATE_VYATA_OS]
+    members: [EMPIRE_STATE_VYATTA_OS]
 
   GHERKIN_BRANCH:
-    members: [GHERKIN_VYATA_OS]
+    members: [GHERKIN_VYATTA_OS]
 
   network:
     members: [ports, mgmt, public, private, secgrp,floating_ip, external_network]
